@@ -1,0 +1,254 @@
+// Copyright 2021 Signal Messenger, LLC
+// SPDX-License-Identifier: AGPL-3.0-only
+
+.module-Modal {
+  @include popper-shadow();
+  border-radius: 8px;
+  overflow: hidden;
+  // We need this to be a number not divisible by 5 so that if we have sticky
+  // buttons the bottom doesn't bleed through by 1px.
+  max-height: 89vh;
+  display: flex;
+  flex-direction: column;
+  @include light-theme() {
+    background: $color-white;
+    color: $color-gray-90;
+  }
+
+  @include dark-theme() {
+    background: $color-gray-80;
+    color: $color-gray-05;
+  }
+
+  &__header {
+    &--with-back-button .module-Modal__title {
+      text-align: center;
+    }
+  }
+
+  &__headerTitle {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding-block: 16px 1em;
+    padding-inline: 16px;
+  }
+
+  &__title {
+    @include font-body-1-bold;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+  }
+
+  &__back-button {
+    @include button-reset;
+
+    border-radius: 4px;
+    height: 20px;
+    width: 20px;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+
+      @include light-theme {
+        @include color-svg(
+          '../images/icons/v3/chevron/chevron-left.svg',
+          $color-gray-75
+        );
+      }
+
+      @include dark-theme {
+        @include color-svg(
+          '../images/icons/v3/chevron/chevron-left.svg',
+          $color-gray-15
+        );
+      }
+    }
+
+    &:hover,
+    &:focus {
+      box-shadow: 0 0 0 2px $color-ultramarine;
+    }
+  }
+
+  &__close-button {
+    @include button-reset;
+
+    border-radius: 4px;
+    height: 20px;
+    width: 20px;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+
+      @include light-theme {
+        @include color-svg('../images/icons/v3/x/x.svg', $color-gray-75);
+      }
+
+      @include dark-theme {
+        @include color-svg('../images/icons/v3/x/x.svg', $color-gray-15);
+      }
+    }
+
+    &:hover,
+    &:focus {
+      box-shadow: 0 0 0 2px $color-ultramarine;
+    }
+  }
+
+  &__body {
+    @include scrollbar;
+    @include font-body-1;
+    margin: 0;
+    overflow-y: overlay;
+    overflow-x: auto;
+    transition: border-color 150ms ease-in-out;
+  }
+
+  &--padded {
+    .module-Modal__body {
+      padding: 16px;
+
+      // ProfileEditor nests footer within the Modal's body
+      .module-Modal__button-footer {
+        padding-block: 1em 0;
+        padding-inline: 0;
+      }
+    }
+  }
+
+  &--has-header#{&}--header-divider {
+    .module-Modal__body {
+      @include light-theme() {
+        border-top-color: $color-gray-05;
+      }
+      @include dark-theme() {
+        border-top-color: $color-gray-90;
+      }
+    }
+  }
+
+  &--has-header {
+    .module-Modal__body {
+      padding-top: 0;
+      border-top: 1px solid transparent;
+      border-bottom: 1px solid transparent;
+
+      &--scrolled {
+        @include light-theme {
+          border-top-color: $color-gray-05;
+        }
+
+        @include dark-theme {
+          border-top-color: $color-gray-90;
+        }
+      }
+    }
+  }
+
+  &--has-footer#{&}--footer-divider {
+    .module-Modal__body {
+      @include light-theme() {
+        border-bottom-color: $color-gray-05;
+      }
+      @include dark-theme() {
+        border-bottom-color: $color-gray-90;
+      }
+    }
+  }
+
+  &--has-footer {
+    .module-Modal__body {
+      border-bottom: 1px solid transparent;
+
+      &--overflow:not(&--scrolledToBottom) {
+        @include light-theme {
+          border-bottom-color: $color-gray-05;
+        }
+
+        @include dark-theme {
+          border-bottom-color: $color-gray-90;
+        }
+      }
+    }
+  }
+
+  &__button-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    padding-block: 1em 16px;
+    padding-inline: 16px;
+    gap: 8px;
+
+    .module-Button:not(:first-child) {
+      margin-inline-start: 4px;
+    }
+
+    &--one-button-per-line {
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  }
+
+  // Overrides for a modal with important message
+  &--important {
+    padding-block: 10px 16px;
+    padding-inline: 12px;
+
+    .module-Modal__header {
+      // Necessary because of the larger top margins for the title
+      align-items: start;
+      padding: 0;
+    }
+
+    .module-Modal__body {
+      padding-block: 0 4px !important;
+      padding-inline: 12px !important;
+    }
+
+    .module-Modal__body p {
+      margin-block: 0 20px;
+      margin-inline: 0;
+    }
+
+    .module-Modal__title {
+      @include font-title-2;
+      text-align: center;
+      margin-block: 10px 22px;
+      margin-inline: 0;
+
+      flex-shrink: 0;
+
+      &--with-x-button {
+        margin-block-start: 22px;
+      }
+    }
+
+    .module-Modal__button-footer {
+      justify-content: center;
+      margin-top: 27px;
+      flex-grow: 0;
+      flex-shrink: 0;
+      padding-block: 0 4px;
+      padding-inline: 12px;
+
+      .module-Button {
+        flex-grow: 1;
+        max-width: 152px;
+
+        &:not(:first-child) {
+          margin-inline-start: 16px;
+        }
+      }
+    }
+  }
+}
