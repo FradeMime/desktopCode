@@ -8956,10 +8956,10 @@ electron-window@^0.8.0:
   dependencies:
     is-electron-renderer "^2.0.0"
 
-electron@33.0.1:
-  version "33.0.1"
-  resolved "https://registry.npmmirror.com/electron/-/electron-33.0.1.tgz#6e990077eb27d0d3dc9a0c424271a2f10c202263"
-  integrity sha512-PipPnWH4gvf7o+P8jlKQZGgPfb5eHcLgTrnKkFzb98MXhyPjVJYCR7YWqcawZ8IfyJCut8vMxLuBFLT1Ag8TSQ==
+electron@34.1.0:
+  version "34.1.0"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-34.1.0.tgz#47691b0297ed73a477e838bd7343f307a2e60693"
+  integrity sha512-ZUid8XrGPA0dfes97PPADc8ecWOUX/qYRNp1glze9coZLEYc+PsMvgjVDCHSvjfHfiI+V3unwngSVpBouX71YQ==
   dependencies:
     "@electron/get" "^2.0.0"
     "@types/node" "^20.9.0"
